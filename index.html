@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Bonbuch</title>
+<meta name="theme-color" content="#F6F2E8">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+
+:root{--paper:#FBF8F0;--bg:#F1ECE0;--ink:#2C2C2A;--ink2:#5F5E5A;--ink3:#888780;--line:#DDD8CB;--rule:#E4DFD2;--margin:#E8A48A;--accent:#1D6E57;--accent-bg:#E1F2EB;--danger:#A32D2D;--ok:#3B6D11;--card:#FFFDF8;
+--serif:'Source Serif 4',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root{--paper:#26251F;--bg:#1C1B17;--ink:#ECE8DD;--ink2:#B4B0A4;--ink3:#8A867B;--line:#3A382F;--rule:#34322A;--margin:#9A5A44;--accent:#5DCAA5;--accent-bg:#17352C;--danger:#F09595;--ok:#97C459;--card:#2B2A23}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5}
+header{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.top{max-width:920px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.brand{font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:-.01em}
+.brand span{color:var(--accent)}
+.month{display:flex;align-items:center;gap:4px;margin-left:auto}
+.month b{font-family:var(--serif);font-weight:600;min-width:130px;text-align:center}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;border-radius:0;background:transparent;padding:5px 12px;font-size:13px}
+.seg button.on{background:var(--ink);color:var(--paper)}
+nav{max-width:920px;margin:0 auto;padding:0 16px;display:flex;gap:4px;overflow-x:auto}
+nav button{border:1px solid var(--line);border-bottom:0;border-radius:10px 10px 0 0;background:var(--bg);padding:8px 14px;font-size:14px;color:var(--ink2);white-space:nowrap}
+nav button.on{background:var(--paper);color:var(--ink);font-weight:500}
+main{max-width:920px;margin:0 auto;padding:0 16px 80px}
+section{display:none;background:var(--paper);border:1px solid var(--line);border-top:0;border-radius:0 0 14px 14px;padding:20px}
+section.on{display:block}
+button{font-family:inherit;font-size:14px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 12px;cursor:pointer}
+button:hover{border-color:var(--ink3)}
+button.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+button.ghost{background:transparent;border-color:transparent}
+button.icon{padding:4px 8px}
+input,select{font-family:inherit;font-size:14px;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:8px;padding:7px 9px;min-width:0}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:-1px}
+h2{font-family:var(--serif);font-weight:600;font-size:20px;margin:0 0 12px}
+h3{font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--ink3);margin:22px 0 10px}
+.grid{display:grid;gap:14px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.stat small{display:block;font-size:12px;color:var(--ink3)}
+.stat b{font-family:var(--serif);font-size:26px;font-weight:600}
+.up{color:var(--danger)} .down{color:var(--ok)}
+.muted{color:var(--ink3);font-size:13px}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:-1px}
+.tab{border:1px solid var(--line);border-bottom:0;border-radius:8px 8px 0 0;padding:4px 10px;font-size:12px;cursor:pointer;background:var(--bg)}
+.tab.on{background:var(--card);font-weight:600}
+.donutwrap{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.legend{flex:1;min-width:170px}
+.legend div{display:flex;align-items:center;gap:8px;padding:3px 0;font-size:14px}
+.legend i{width:10px;height:10px;border-radius:3px;display:inline-block}
+.legend span:last-child{margin-left:auto;font-variant-numeric:tabular-nums}
+.bar{height:8px;background:var(--rule);border-radius:4px;overflow:hidden;margin:4px 0 10px}
+.bar>div{height:100%;border-radius:4px}
+.row{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+
+/* notebook */
+.notebook{background:var(--paper);background-image:repeating-linear-gradient(transparent 0 31px,var(--rule) 31px 32px);border-radius:8px;padding:8px 8px 8px 46px;position:relative;font-family:var(--serif);min-height:300px}
+.notebook:before{content:"";position:absolute;left:34px;top:0;bottom:0;width:1px;background:var(--margin)}
+.nb-day{font-size:13px;color:var(--ink3);line-height:32px;font-family:var(--sans);letter-spacing:.04em}
+.nb-line{display:flex;align-items:baseline;line-height:32px;cursor:pointer;font-size:16px}
+.nb-line .dots{flex:1;border-bottom:1px dotted var(--ink3);margin:0 8px;transform:translateY(-6px)}
+.nb-line .amt{font-variant-numeric:tabular-nums}
+.nb-line.neg .amt{color:var(--ok)}
+.nb-tag{font-family:var(--sans);font-size:11px;line-height:18px;padding:0 7px;border-radius:999px;margin-left:8px}
+.nb-detail{font-family:var(--sans);font-size:13px;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 12px;margin:4px 0 12px}
+.nb-detail table{width:100%;border-collapse:collapse}
+.nb-detail td{padding:3px 4px;border-bottom:1px solid var(--rule)}
+.nb-detail td:last-child{text-align:right;font-family:var(--mono);font-size:12px}
+.nb-detail img{max-width:180px;border-radius:6px;margin-top:8px;cursor:zoom-in}
+.nb-total{display:flex;justify-content:space-between;line-height:32px;font-weight:600;color:var(--danger);border-top:2px solid var(--ink3);margin-top:8px}
+
+/* scan */
+.drop{border:2px dashed var(--line);border-radius:12px;padding:30px;text-align:center;cursor:pointer}
+.drop:hover{border-color:var(--accent)}
+.items{width:100%;border-collapse:collapse;font-size:14px}
+.items td{padding:4px 3px;border-bottom:1px solid var(--rule);vertical-align:middle}
+.items input,.items select{width:100%}
+.items .p{width:90px}
+.warn{background:#FAEEDA;color:#633806;border-radius:8px;padding:8px 12px;font-size:13px;margin:10px 0}
+.progress{height:6px;background:var(--rule);border-radius:3px;overflow:hidden}
+.progress div{height:100%;background:var(--accent);width:0;transition:width .2s}
+.sub{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--rule)}
+.sub label{flex:1;display:flex;align-items:center;gap:10px;cursor:pointer}
+.sub input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent)}
+.sub.off label{color:var(--ink3);text-decoration:line-through}
+.form{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.form>*{flex:1 1 120px}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:20}
+.toast.on{opacity:1}
+.lightbox{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;z-index:30}
+.lightbox img{max-width:94vw;max-height:94vh}
+.empty{text-align:center;padding:40px 10px;color:var(--ink3);font-family:var(--serif)}
+@media (max-width:560px){section{padding:14px}.month b{min-width:100px}.brand{font-size:19px}}
+</style>
+</head>
+<body>
+<header>
+ <div class="top">
+  <div class="brand">Bon<span>buch</span></div>
+  <div class="seg" title="Anzeige"><button id="vOrig" class="on">Original</button><button id="vDe">Deutsch · €</button></div>
+  <div class="month"><button class="icon" id="prevM" aria-label="Vormonat">‹</button><b id="mLabel"></b><button class="icon" id="nextM" aria-label="Nächster Monat">›</button></div>
+ </div>
+ <nav>
+  <button data-t="ov" class="on">Übersicht</button>
+  <button data-t="nb">Notizbuch</button>
+  <button data-t="scan">Bon scannen</button>
+  <button data-t="inc">Einnahmen</button>
+  <button data-t="subs">Abos & Digital</button>
+  <button data-t="set">Einstellungen</button>
+ </nav>
+</header>
+<main>
+<section id="ov" class="on"></section>
+<section id="nb"></section>
+<section id="scan">
+ <h2>Kassenbon erfassen</h2>
+ <div id="scanStart">
+  <label class="drop" for="file"><div style="font-family:var(--serif);font-size:18px">Foto aufnehmen oder auswählen</div><div class="muted">Deutsch, Englisch, Dänisch · läuft komplett auf deinem Gerät</div></label>
+  <input type="file" id="file" accept="image/*" capture="environment" hidden>
+  <p class="muted">Tipp: Bon flach hinlegen, gutes Licht, nur den Bon im Bild.</p>
+  <button id="manualBtn">Ohne Foto manuell eintragen</button>
+ </div>
+ <div id="scanProg" hidden><p id="progTxt" class="muted">Lese Bon …</p><div class="progress"><div id="progBar"></div></div></div>
+ <div id="review" hidden></div>
+</section>
+<section id="inc"></section>
+<section id="subs"></section>
+<section id="set"></section>
+</main>
+<div class="toast" id="toast"></div>
+<div class="lightbox" id="lb"><img id="lbImg" alt="Beleg"></div>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

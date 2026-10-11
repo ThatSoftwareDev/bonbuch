@@ -1,0 +1,33 @@
+
+
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+.vite/
+
+# Environment / secrets
+.env
+.env.local
+.env.*.local
+
+# ---- PERSONAL DATA — do not commit ----
+# Your scanned receipts and any real expense data.
+# Rename these to match the actual folders/files in your project.
+daten/
+receipts/
+uploads/
+scans/
+test-receipts/
+*.sqlite
+*.db
+*.db-journal
+my-data/
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
